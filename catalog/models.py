@@ -23,7 +23,7 @@ class Product(models.Model):
     price = models.FloatField(verbose_name='Цена')
     created_at = models.DateField(auto_now_add=True, verbose_name='Дата создания')
     updated_at = models.DateField(auto_now=True, verbose_name='Дата последнего изменения')
-    manufactured_at = models.ImageField(max_length=20, **NULLABLE, verbose_name='Дата производства')
+    manufactured_at = models.CharField(max_length=20, **NULLABLE, verbose_name='Дата производства')
 
     def __str__(self):
         return f'{self.name}, {self.description}, {self.category}, {self.price}, {self.created_at}, {self.updated_at}'
