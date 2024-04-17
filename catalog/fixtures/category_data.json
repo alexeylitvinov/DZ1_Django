@@ -1,0 +1,58 @@
+[
+  {
+    "model": "catalog.category",
+    "pk": 1,
+    "fields": {
+      "name": "смартфоны",
+      "description": "смартфоны разных производителей"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 2,
+    "fields": {
+      "name": "ТВ",
+      "description": "телевизионная техника"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 3,
+    "fields": {
+      "name": "компьютеры",
+      "description": "компьютеры, ноутбуки, ультрабуки, мини ПК"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 4,
+    "fields": {
+      "name": "бытовая техника",
+      "description": "техника для дома"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 5,
+    "fields": {
+      "name": "аудио техника",
+      "description": "аудио, гаджеты, наушники, mp3 плейеры"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 6,
+    "fields": {
+      "name": "компдектующие ПК",
+      "description": "видеокарты, материнские, платы, память и т.д"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 7,
+    "fields": {
+      "name": "Планшеты",
+      "description": "Планшеты разных производителей"
+    }
+  }
+]
