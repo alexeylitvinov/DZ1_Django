@@ -1,8 +1,10 @@
 from django.contrib import admin
 
+from blog.models import Blog
 from catalog.models import Category, Product, Contact
 
 admin.site.register(Contact)
+admin.site.register(Blog)
 
 
 @admin.register(Category)

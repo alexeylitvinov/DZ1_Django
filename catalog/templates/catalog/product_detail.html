@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'catalog/base.html' %}
 {% load filters  %}
 {% block content %}
 <div class="container">
@@ -7,15 +7,15 @@
             <img src="{{ product.image | media_filter }}" class="rounded mx-auto d-block" width="300" height="300">
             <div class="card-body">
                 <footer class="pt-4 my-md-5 pt-md-5 border-top">
-                    <h5 class="card-title">{{ product.name }}</h5>
+                    <h5 class="card-title">{{ object.name }}</h5>
                 </footer>
-                <p class="card-text">{{ product.description }}</p>
+                <p class="card-text">{{ object.description }}</p>
                 <footer class="pt-4 my-md-5 pt-md-5 border-top">
-                    <h5 class="card-title">Цена: {{ product.price }}</h5>
+                    <h5 class="card-title">Цена: {{ object.price }}</h5>
                 </footer>
-                <p class="card-text">Категория продукта: {{ product.category }}</p>
-                <p class="card-text">Дата добавления товара: {{ product.created_at }}</p>
-                <p class="card-text">Дата последнего обновления товара: {{ product.updated_at }}</p>
+                <p class="card-text">Категория продукта: {{ object.category }}</p>
+                <p class="card-text">Дата добавления товара: {{ object.created_at }}</p>
+                <p class="card-text">Дата последнего обновления товара: {{ object.updated_at }}</p>
                 <a href="#" class="btn btn-primary">Купить</a>
                 <a href="/" class="btn btn-primary">Главная</a>
             </div>

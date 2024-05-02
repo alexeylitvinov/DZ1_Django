@@ -1,0 +1,33 @@
+{% extends 'catalog/base.html' %}
+{% block content %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Блог</h1>
+    <p class="lead">Сюда можете опубликовать свой блог</p>
+    <a class="btn btn-primary" href="{% url 'blog:blog_create' %}" role="button">Создать новый блог</a>
+</div>
+
+<div class="container">
+    <div class="row text-center">
+        {% for bl in object_list %}
+        {% if bl.publication %}
+        <div class="col-4">
+            <div class="card mb-4 box-shadow">
+                <div class="card-header">
+                    <h6 class="my-0 font -normal">{{ bl.title|truncatechars:30 }}</h6>
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title pricing-card-title">{{ bl.created_at }}</h4>
+                    <h5 class="card-title pricing-card-title">{{ bl.view_count }} просмотров</h5>
+                    <h5 class="card-title">{{ bl.slug }}</h5>
+                    <p class="card-text">{{ bl.text|truncatechars:80 }}</p>
+                    <a class="btn btn-primary" href="/blog/{{ bl.pk }}/" role="button">Посмотреть</a>
+                    <a href="{% url 'blog:blog_update' bl.pk %}" class="btn btn-primary">Обновить</a>
+                    <a href="{% url 'blog:blog_delete' bl.pk %}" class="btn btn-primary">Удалить</a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'catalog/base.html' %}
+{% load blog_filters %}
+{% block content %}
+<div class="container">
+    <div class="mx-auto p-2" style="width: auto;">
+        <div class="card">
+            <img src="{{ object.image | media_filter}}" class="rounded mx-auto d-block" width="300" height="300">
+            <div class="card-body">
+                <footer class="pt-4 my-md-5 pt-md-5 border-top">
+                    <h5 class="card-title">{{ object.title }}</h5>
+                </footer>
+                <p class="card-text">{{ object.text }}</p>
+                <footer class="pt-4 my-md-5 pt-md-5 border-top">
+                    <h6 class="card-title">Дата создания: {{ object.created_at }}</h6>
+                </footer>
+                <p class="card-text">Slug: {{ object.slug }}</p>
+                <p class="card-text">Дата публикации: {{ object.created_at }}</p>
+                <p class="card-text">Количество просмотров: {{ object.view_count }}</p>
+                <a href="/blog" class="btn btn-primary">Назад</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
