@@ -37,6 +37,12 @@ class BlogDeleteView(DeleteView):
 class BlogListView(ListView):
     model = Blog
 
+    def get_queryset(self):
+        """
+        Фильтрация объектов по признаку публикации
+        """
+        return super().get_queryset().filter(publication=True)
+
 
 class BlogDetailView(DetailView):
     model = Blog
