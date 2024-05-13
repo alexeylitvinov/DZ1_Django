@@ -17,6 +17,11 @@
                 <div class="card-body">
                     <h4 class="card-title pricing-card-title">{{ product.price }} руб.</h4>
                     <p class="card-text">{{ product.description|truncatechars:80 }}</p>
+                    {% if product.active_version %}
+                    <p class="card-text">Версия: {{ product.active_version.version_name }}</p>
+                    {% else %}
+                    <p class="card-text">Активная версия отсутствует</p>
+                    {% endif %}
                     <a class="btn btn-primary" href="/product/{{ product.pk }}/" role="button">Посмотреть</a>
                     <a href="{% url 'catalog:product_update' product.pk %}" class="btn btn-primary">Обновить</a>
                     <a href="{% url 'catalog:product_delete' product.pk %}" class="btn btn-primary">Удалить</a>
@@ -25,18 +30,18 @@
         </div>
         {% endfor %}
     </div>
-<!--      <ul class="pagination">-->
+    <!--      <ul class="pagination">-->
 
-<!--        {% if products.has_previous %}-->
-<!--        <li class="page-item"><a class="page-link" href="?page={{ products.previous_page_number }}">Предыдущая</a></li>-->
-<!--        {% endif %}-->
+    <!--        {% if products.has_previous %}-->
+    <!--        <li class="page-item"><a class="page-link" href="?page={{ products.previous_page_number }}">Предыдущая</a></li>-->
+    <!--        {% endif %}-->
 
-<!--        <li class="page-item"><a class="page-link">{{ products.number }} из {{ products.paginator.num_pages }}</a></li>-->
+    <!--        <li class="page-item"><a class="page-link">{{ products.number }} из {{ products.paginator.num_pages }}</a></li>-->
 
-<!--        {% if products.has_next %}-->
-<!--        <li class="page-item"><a class="page-link" href="?page={{ products.next_page_number }}">Следующая</a></li>-->
-<!--        {% endif %}-->
-<!--    </ul>-->
+    <!--        {% if products.has_next %}-->
+    <!--        <li class="page-item"><a class="page-link" href="?page={{ products.next_page_number }}">Следующая</a></li>-->
+    <!--        {% endif %}-->
+    <!--    </ul>-->
 </div>
 
 {% endblock %}
