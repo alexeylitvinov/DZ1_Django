@@ -1,0 +1,26 @@
+{% extends 'catalog/base.html' %}
+{% block content %}
+<div class="container">
+    <footer class="pt-4 my-md-5 pt-md-5 border-top">
+        <div class="row">
+            <div class="col-6 col-md">
+                <form method="post" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                    </div>
+                    <footer class="pt-3 my-md-3 pt-md-3 border-top"></footer>
+                    <button type="submit" class="btn btn-primary">
+                        {% if object %}
+                            Сохранить
+                        {% else %}
+                            Создать
+                        {% endif %}
+                        </button>
+                    <a href="/" class="btn btn-primary">Назад</a>
+                </form>
+            </div>
+        </div>
+    </footer>
+</div>
+{% endblock %}
