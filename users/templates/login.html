@@ -6,11 +6,13 @@
             <div class="col-6 col-md">
                 <form method="post" enctype="multipart/form-data">
                     <div class="mb-3">
-                        <p class="card-text">Действительно хотите удалить {{ object.name }} ?</p>
                         {% csrf_token %}
+                        {{ form.as_p }}
                     </div>
                     <footer class="pt-3 my-md-3 pt-md-3 border-top"></footer>
-                    <button type="submit" class="btn btn-primary">Удалить</button>
+                    <button type="submit" class="btn btn-primary">
+                        Войти
+                    </button>
                     <a href="/" class="btn btn-primary">Назад</a>
                 </form>
             </div>

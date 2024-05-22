@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
@@ -28,32 +29,38 @@ class ProductDetailView(DetailView):
     model = Product
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(LoginRequiredMixin, CreateView):
     """
     Формирование отображения страницы при создании объекта Продукт
     """
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('catalog:product_list')
+    login_url = "/users/login/"
+    redirect_field_name = "redirect_to"
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
     """
     Формирование отображения страницы при обновлении объекта Продукт
     """
     model = Product
     form_class = ProductForm
+    login_url = "/users/login/"
+    redirect_field_name = "redirect_to"
 
     def get_success_url(self):
         return reverse('catalog:product_detail', args=[self.kwargs.get('pk')])
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(LoginRequiredMixin, DeleteView):
     """
     Формирование отображения страницы при удалении объекта Продукт
     """
     model = Product
     success_url = reverse_lazy('catalog:product_list')
+    login_url = "/users/login/"
+    redirect_field_name = "redirect_to"
 
 
 class ContactsListView(ListView):
