@@ -14,11 +14,17 @@ from users.models import User
 
 
 class UserCreateView(CreateView):
+    """
+    Регистрация нового пользователя
+    """
     model = User
     form_class = UserRegisterForm
     success_url = reverse_lazy('users:login')
 
     def form_valid(self, form):
+        """
+        Подтверждение регистрации с отсылкой письма на email пользователя
+        """
         user = form.save()
         user.is_active = False
         token = secrets.token_hex(16)
@@ -43,10 +49,16 @@ def email_verification(request, token):
 
 
 class UserLoginView(LoginView):
+    """
+    Авторизация пользователя
+    """
     template_name = 'users/login.html'
 
 
 def password_reset(request):
+    """
+    Установка рандомного пароля пользователя
+    """
     if request.method == 'POST':
         email = request.POST['email']
         try:

@@ -1,5 +1,7 @@
 from django.db import models
 
+from users.models import User
+
 NULLABLE = {'null': True, 'blank': True}
 
 
@@ -29,7 +31,7 @@ class Product(models.Model):
     price = models.FloatField(verbose_name='Цена')
     created_at = models.DateField(auto_now_add=True, verbose_name='Дата создания')
     updated_at = models.DateField(auto_now=True, verbose_name='Дата последнего изменения')
-
+    owner = models.ForeignKey(User, verbose_name='Владелец', **NULLABLE, on_delete=models.SET_NULL)
     # @property
     # def active_version(self):
     #     active_version = self.version_set.filter(is_current=True).first()
