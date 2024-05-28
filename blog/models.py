@@ -8,7 +8,7 @@ class Blog(models.Model):
     Модель Blog в приложении Blog для хранения пользовательских публикаций
     """
     title = models.CharField(max_length=50, verbose_name='заголовок')
-    slug = models.CharField( max_length=200, verbose_name='slug', null=True, blank=True)
+    slug = models.CharField(max_length=200, verbose_name='slug', null=True, blank=True)
     text = models.TextField(verbose_name='содержание')
     image = models.ImageField(**NULLABLE, verbose_name='изображение')
     created_at = models.DateField(auto_now_add=True, verbose_name='дата создания')
@@ -21,3 +21,8 @@ class Blog(models.Model):
     class Meta:
         verbose_name = 'блог'
         verbose_name_plural = 'блоги'
+        permissions = [
+            ('can_edit_title', 'Can edit title'),
+            ('can_edit_text', 'Can edit text'),
+            ('can_edit_publication', 'Can edit publication')
+        ]

@@ -10,6 +10,7 @@ class StyleFormMixin:
     """
     Миксин для стиля отображения формы создания и редактирования
     """
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
@@ -23,9 +24,20 @@ class ProductForm(StyleFormMixin, forms.ModelForm):
     """
     Отображение страницы Продукты при создании или редактировании
     """
+
     class Meta:
         model = Product
         exclude = ('owner',)
+
+
+class ProductModeratorForm(StyleFormMixin, forms.ModelForm):
+    """
+    Отображение страницы Продукты при редактировании группой moderator
+    """
+
+    class Meta:
+        model = Product
+        fields = ('description', 'category', 'publication',)
 
     def clean_name(self):
         """

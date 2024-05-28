@@ -1,8 +1,9 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
-from catalog.forms import ProductForm
+from catalog.forms import ProductForm, ProductModeratorForm
 from catalog.models import Product, Contact
 
 
@@ -20,6 +21,12 @@ class ProductsListView(ListView):
         for product in context['object_list']:
             product.active_version = product.version_set.filter(is_current=True).first()
         return context
+
+    def get_queryset(self):
+        """
+        Фильтрация объектов по признаку публикации
+        """
+        return super().get_queryset().filter(publication=True)
 
 
 class ProductDetailView(DetailView):
@@ -58,6 +65,15 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return reverse('catalog:product_detail', args=[self.kwargs.get('pk')])
+
+    def get_form_class(self):
+        user = self.request.user
+        if user == self.object.owner:
+            return ProductForm
+        elif user.has_perm('catalog.can_publication') and user.has_perm('catalog.can_edit_description') and user.has_perm(
+                'catalog.can_edit_category'):
+            return ProductModeratorForm
+        raise PermissionDenied
 
 
 class ProductDeleteView(LoginRequiredMixin, DeleteView):

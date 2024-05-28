@@ -1,10 +1,8 @@
 from django.contrib import admin
 
-from blog.models import Blog
 from catalog.models import Category, Product, Contact, Version
 
 admin.site.register(Contact)
-admin.site.register(Blog)
 
 
 @admin.register(Category)
@@ -20,7 +18,7 @@ class ProductAdmin(admin.ModelAdmin):
     """
     Отображение таблицы Product в админ панели
     """
-    list_display = ('id', 'name', 'price', 'category_id')
+    list_display = ('id', 'name', 'price', 'category_id', 'publication')
     list_filter = ('category',)
     search_fields = ('name', 'description',)
 

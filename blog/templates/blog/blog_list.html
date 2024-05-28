@@ -20,8 +20,10 @@
                     <h5 class="card-title">{{ bl.slug }}</h5>
                     <p class="card-text">{{ bl.text|truncatechars:80 }}</p>
                     <a class="btn btn-primary" href="/blog/{{ bl.pk }}/" role="button">Посмотреть</a>
-                    <a href="{% url 'blog:blog_update' bl.pk %}" class="btn btn-primary">Обновить</a>
-                    <a href="{% url 'blog:blog_delete' bl.pk %}" class="btn btn-primary">Удалить</a>
+                    {% if perms.blog.can_edit_title and perms.blog.can_edit_text and perms.blog.can_edit_publication %}
+                    <a class="btn btn-primary" href="{% url 'blog:blog_update' bl.pk %}" role="button">Обновить</a>
+                    <a class="btn btn-primary" href="{% url 'blog:blog_delete' bl.pk %}" role="button">Удалить</a>
+                    {% endif %}
                 </div>
             </div>
         </div>

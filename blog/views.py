@@ -1,12 +1,14 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 from pytils.translit import slugify
 
-from blog.forms import BlogForm
+from blog.forms import BlogForm, BlogModeratorForm
 from blog.models import Blog
 
 
-class BlogCreateView(CreateView):
+class BlogCreateView(LoginRequiredMixin, CreateView):
     """
     Формирование отображения страницы при создании объекта Блог
     """
@@ -14,6 +16,8 @@ class BlogCreateView(CreateView):
     form_class = BlogForm
     # fields = ('title', 'text', 'image', 'publication')
     success_url = reverse_lazy('blog:blog_list')
+    login_url = "/users/login/"
+    redirect_field_name = "redirect_to"
 
     def form_valid(self, form):
         """
@@ -26,16 +30,25 @@ class BlogCreateView(CreateView):
         return super().form_valid(form)
 
 
-class BlogUpdateView(UpdateView):
+class BlogUpdateView(LoginRequiredMixin, UpdateView):
     """
     Формирование отображения страницы при обновлении объекта Блог
     """
     model = Blog
     form_class = BlogForm
+
     # fields = ('title', 'text', 'image', 'publication')
 
     def get_success_url(self):
         return reverse('blog:blog_detail', args=[self.kwargs.get('pk')])
+
+    def get_form_class(self):
+        user = self.request.user
+        if user.has_perm('blog.can_edit_title') and user.has_perm(
+                'blog.can_edit_text') and user.has_perm(
+                'blog.can_edit_publication'):
+            return BlogModeratorForm
+        raise PermissionDenied
 
 
 class BlogDeleteView(DeleteView):

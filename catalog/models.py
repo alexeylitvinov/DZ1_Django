@@ -32,6 +32,8 @@ class Product(models.Model):
     created_at = models.DateField(auto_now_add=True, verbose_name='Дата создания')
     updated_at = models.DateField(auto_now=True, verbose_name='Дата последнего изменения')
     owner = models.ForeignKey(User, verbose_name='Владелец', **NULLABLE, on_delete=models.SET_NULL)
+    publication = models.BooleanField(default=False, verbose_name='Публикация')
+
     # @property
     # def active_version(self):
     #     active_version = self.version_set.filter(is_current=True).first()
@@ -46,6 +48,11 @@ class Product(models.Model):
     class Meta:
         verbose_name = 'продукт'
         verbose_name_plural = 'продукты'
+        permissions = [
+            ('can_publication', 'Can edit publication'),
+            ('can_edit_description', 'Can edit description'),
+            ('can_edit_category', 'Can edit category')
+        ]
 
 
 class Contact(models.Model):
