@@ -1,5 +1,3 @@
-from django.forms import BooleanField
-
 from blog.models import Blog
 from django import forms
 
