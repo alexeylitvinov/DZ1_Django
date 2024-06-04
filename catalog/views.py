@@ -4,7 +4,8 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 from catalog.forms import ProductForm, ProductModeratorForm
-from catalog.models import Product, Contact
+from catalog.models import Product, Contact, Category
+from catalog.services import get_category_from_cache
 
 
 class ProductsListView(ListView):
@@ -26,7 +27,8 @@ class ProductsListView(ListView):
         """
         Фильтрация объектов по признаку публикации
         """
-        return super().get_queryset().filter(publication=True)
+        super().get_queryset().filter(publication=True)
+        return get_category_from_cache(Product)
 
 
 class ProductDetailView(DetailView):
@@ -70,8 +72,8 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
         user = self.request.user
         if user == self.object.owner:
             return ProductForm
-        elif user.has_perm('catalog.can_publication') and user.has_perm('catalog.can_edit_description') and user.has_perm(
-                'catalog.can_edit_category'):
+        elif user.has_perm('catalog.can_publication') and user.has_perm(
+                'catalog.can_edit_description') and user.has_perm('catalog.can_edit_category'):
             return ProductModeratorForm
         raise PermissionDenied
 
@@ -91,3 +93,13 @@ class ContactsListView(ListView):
     Просмотр на странице всех объектов Контакт
     """
     model = Contact
+
+
+class CategoryListView(ListView):
+    """
+    Просмотр на странице всех объектов Категории
+    """
+    model = Category
+
+    def get_queryset(self):
+        return get_category_from_cache(Category)
